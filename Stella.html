@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="LTx0ACDzDje3pCZC38YXUT">
+<head data-page-node-id="gEfLujDtdNhG2sLZPFoDsC">
+<meta charset="UTF-8" data-page-node-id="DwBVbDTROOaJLX6JU5l3GG">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="LlEIyFa8Gr5BDmhtuGckmm">
+<title>Stella 星辰 — 属于你的那片星空</title>
+<meta name="description" content="Stella 星辰是一款高精度占星 App：NASA 星历本命星盘、每日与每周运势、AI 解读与月运深度报告。本地优先的隐私设计，App Store 下载。" data-page-node-id="HFQV6SE7eU0oG65jRLeZqG">
+<meta name="theme-color" content="#07070C" data-page-node-id="eHPbQmfQ5eWGTVGzGfDiSS">
+<meta property="og:title" content="Stella 星辰 — 属于你的那片星空" data-page-node-id="AVSjJhoXXBNw1MBb1t1q16">
+<meta property="og:description" content="本命星盘 · 每日与每周运势 · AI 解读 · 月运深度报告。用 NASA 星历数据，看见属于你的那片星空。" data-page-node-id="rNmL7GT6Q3a2sfubjtsXEt">
+<link rel="preconnect" href="https://fonts.googleapis.com" data-page-node-id="F0wTTEC44nfyhJDiQpPRbm">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-page-node-id="YsGycP3YDaB1A8T8LJ65mj">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet" data-page-node-id="pt5OhJF8gwZtbCiP9opako">
+<style>
+:root{
+  --bg:#07070C;
+  --bg-2:#0B0913;
+  --ink:#F5F2EC;
+  --ink-2:rgba(245,242,236,.62);
+  --ink-3:rgba(245,242,236,.36);
+  --gold:#C9A96A;
+  --gold-2:#E7D2A4;
+  --gold-3:rgba(201,169,106,.14);
+  --violet:#6C5CE0;
+  --line:rgba(245,242,236,.10);
+  --line-2:rgba(245,242,236,.18);
+  --radius:22px;
+  --max:1160px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --serif:"Cormorant Garamond","Songti SC","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  letter-spacing:.01em;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:#0B0913}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+
+/* ---------- 背景层 ---------- */
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.bg-grad{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 620px at 78% -8%, rgba(108,92,224,.20), transparent 62%),
+    radial-gradient(700px 520px at 12% 12%, rgba(201,169,106,.10), transparent 60%),
+    radial-gradient(1000px 700px at 50% 108%, rgba(108,92,224,.12), transparent 65%);
+}
+.bg-vignette{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(4,4,8,.72) 100%);
+}
+main,footer,nav{position:relative;z-index:2}
+
+/* ---------- 通用 ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 32px}
+section{padding:130px 0;position:relative}
+.eyebrow{
+  font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+}
+.h2{
+  font-family:var(--serif);
+  font-size:clamp(32px,4.6vw,54px);line-height:1.16;font-weight:400;
+  letter-spacing:-.01em;margin:16px 0 0;
+}
+.h2 em{font-style:italic;color:var(--gold-2)}
+.lead{color:var(--ink-2);font-size:18px;line-height:1.78;max-width:50ch;margin-top:20px;font-weight:300}
+.hairline{height:1px;background:var(--line)}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  backdrop-filter:saturate(180%) blur(22px);
+  -webkit-backdrop-filter:saturate(180%) blur(22px);
+  background:rgba(7,7,12,.55);
+  border-bottom:1px solid transparent;
+  transition:border-color .35s var(--ease),background .35s var(--ease);
+}
+nav.scrolled{border-bottom-color:var(--line);background:rgba(7,7,12,.82)}
+.nav-in{
+  max-width:var(--max);margin:0 auto;padding:0 32px;height:68px;
+  display:flex;align-items:center;gap:30px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-size:17px;letter-spacing:.02em;font-weight:400}
+.brand .mark{width:22px;height:22px;flex:none;color:var(--gold)}
+.brand b{font-weight:500;letter-spacing:.06em}
+.brand span{color:var(--ink-3);font-weight:300;letter-spacing:.14em;font-size:13px}
+.nav-links{display:flex;gap:34px;margin-left:auto;font-size:14.5px;color:var(--ink-2);font-weight:300}
+.nav-links a{transition:color .25s}
+.nav-links a:hover{color:var(--ink)}
+
+/* ---------- 按钮 ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:50px;padding:0 30px;border-radius:999px;font-size:15.5px;font-weight:500;
+  background:linear-gradient(135deg,var(--gold-2),var(--gold));
+  color:#120E05;white-space:nowrap;
+  transition:transform .3s var(--ease),box-shadow .35s var(--ease),opacity .2s;
+  box-shadow:0 10px 34px rgba(201,169,106,.22);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(201,169,106,.30)}
+.btn.ghost{
+  background:transparent;color:var(--ink);border:1px solid var(--line-2);
+  box-shadow:none;
+}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold-2)}
+.btn.sm{height:40px;padding:0 20px;font-size:14px}
+
+/* 商店徽章 */
+.badges{display:flex;gap:14px;flex-wrap:wrap}
+.badge{
+  display:inline-flex;align-items:center;gap:11px;
+  border:1px solid var(--line-2);border-radius:15px;
+  padding:11px 22px 11px 18px;background:rgba(245,242,236,.03);
+  transition:transform .3s var(--ease),border-color .3s,background .3s;
+}
+.badge:hover{transform:translateY(-2px);border-color:var(--gold);background:rgba(201,169,106,.07)}
+.badge svg{width:26px;height:26px;flex:none;color:var(--ink)}
+.badge .t{display:flex;flex-direction:column;line-height:1.24}
+.badge .t small{font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase}
+.badge .t strong{font-size:15.5px;font-weight:500;letter-spacing:-.01em}
+
+/* ---------- hero ---------- */
+.hero{padding:180px 0 110px}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:44px;align-items:start}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(44px,6.6vw,86px);
+  line-height:1.06;font-weight:400;letter-spacing:-.015em;margin:22px 0 0;
+}
+.hero h1 em{font-style:italic;color:var(--gold-2)}
+.hero .lead{margin-top:26px}
+.hero-cta{margin-top:40px;display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.hero-note{font-size:13px;color:var(--ink-3);letter-spacing:.06em;font-weight:300}
+
+/* 截图画廊（横向滑动） */
+.shots{
+  display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:10px 6px 22px;cursor:grab;
+  scrollbar-width:none;
+}
+.shots::-webkit-scrollbar{display:none}
+.shots img{
+  height:446px;flex:none;scroll-snap-align:center;
+  border-radius:20px;border:1px solid rgba(245,242,236,.12);
+  box-shadow:0 24px 60px rgba(0,0,0,.5);
+  background:#6B63C8;
+  user-select:none;-webkit-user-drag:none;
+}
+.shot-hint{font-size:11.5px;color:var(--ink-3);letter-spacing:.18em;text-align:center}
+
+/* ---------- metrics ---------- */
+.metrics{padding:0 0 96px}
+.metrics-in{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+}
+.metric{background:var(--bg);padding:32px 26px;text-align:center}
+.metric b{display:block;font-family:var(--serif);font-size:38px;font-weight:400;color:var(--gold-2);line-height:1.1}
+.metric span{display:block;font-size:12.5px;color:var(--ink-3);margin-top:8px;letter-spacing:.08em;font-weight:300}
+
+/* ---------- features ---------- */
+.sec-head{max-width:640px;margin-bottom:64px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);padding:34px 30px 36px;
+  background:linear-gradient(165deg,rgba(245,242,236,.045),rgba(245,242,236,.012));
+  transition:transform .4s var(--ease),border-color .4s,background .4s;
+  position:relative;overflow:hidden;
+}
+.card::after{
+  content:"";position:absolute;inset:0;opacity:0;transition:opacity .4s;
+  background:radial-gradient(420px 220px at 50% 0%,rgba(201,169,106,.10),transparent 70%);
+}
+.card:hover{transform:translateY(-5px);border-color:rgba(201,169,106,.30);background:linear-gradient(165deg,rgba(245,242,236,.07),rgba(245,242,236,.02))}
+.card:hover::after{opacity:1}
+.card .ico{width:40px;height:40px;color:var(--gold);margin-bottom:22px;position:relative;z-index:1}
+.card h3{font-size:18.5px;font-weight:500;letter-spacing:.005em;position:relative;z-index:1}
+.card p{color:var(--ink-2);font-size:14.8px;line-height:1.72;margin-top:10px;font-weight:300;position:relative;z-index:1}
+
+/* ---------- chart 区 ---------- */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.chart-visual{position:relative;display:flex;justify-content:center}
+.chart-visual::before{
+  content:"";position:absolute;width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,rgba(108,92,224,.22),transparent 68%);filter:blur(30px);
+}
+.wheel{width:min(100%,460px);position:relative}
+/* 与 App NatalWheel 同源的动效：外刻度环 160s 慢转 / 星云漂移 / 星野闪烁 / 相位线流光 */
+.wheel .tickring{transform-box:view-box;transform-origin:210px 210px;animation:spin 160s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.wheel .n1{animation:drift 18s ease-in-out infinite alternate}
+.wheel .n2{animation:drift 24s ease-in-out infinite -6s}
+.wheel .n3{animation:drift 20s ease-in-out infinite -12s}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(10px,-7px)}}
+.wheel .tw1{animation:tw 2.1s ease-in-out infinite}
+.wheel .tw2{animation:tw 3.4s ease-in-out infinite -.8s}
+.wheel .tw3{animation:tw 1.7s ease-in-out infinite -1.5s}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.7}}
+.wheel .beam{stroke-dashoffset:280;animation:beamflow linear infinite}
+@keyframes beamflow{from{stroke-dashoffset:280}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+  .wheel .tickring,.wheel .n1,.wheel .n2,.wheel .n3,.wheel .tw1,.wheel .tw2,.wheel .tw3,.wheel .beam{animation:none}
+  .wheel .beam{display:none}
+}
+.chart-list{margin-top:34px;display:flex;flex-direction:column;gap:2px}
+.chart-list li{
+  list-style:none;display:flex;gap:16px;align-items:baseline;
+  padding:16px 0;border-top:1px solid var(--line);
+}
+.chart-list li:last-child{border-bottom:1px solid var(--line)}
+.chart-list .g{width:26px;flex:none;color:var(--gold);font-size:17px;text-align:center}
+.chart-list .k{font-size:15px;font-weight:500;width:74px;flex:none}
+.chart-list .v{font-size:14.5px;color:var(--ink-2);font-weight:300;line-height:1.6}
+
+/* ---------- zodiac ---------- */
+.zodiac-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:44px}
+.z{
+  border:1px solid var(--line);border-radius:16px;padding:20px 10px;text-align:center;
+  transition:transform .3s var(--ease),border-color .3s,background .3s;cursor:default;
+}
+.z:hover{transform:translateY(-3px);border-color:rgba(201,169,106,.4);background:rgba(201,169,106,.06)}
+.z .s{font-size:26px;color:var(--gold-2);line-height:1}
+.z .n{display:block;font-size:13px;margin-top:10px;color:var(--ink-2);font-weight:300}
+.z .d{display:block;font-size:10.5px;color:var(--ink-3);margin-top:2px;letter-spacing:.06em}
+
+/* ---------- voices ---------- */
+.voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.voice{border:1px solid var(--line);border-radius:var(--radius);padding:32px 30px;background:rgba(245,242,236,.025)}
+.voice p{font-family:var(--serif);font-size:19px;line-height:1.66;color:var(--ink);font-weight:400}
+.voice .who{display:flex;align-items:center;gap:12px;margin-top:24px}
+.voice .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(140deg,rgba(201,169,106,.5),rgba(108,92,224,.5));flex:none}
+.voice .who b{font-size:13.5px;font-weight:500;display:block}
+.voice .who span{font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
+
+/* ---------- membership ---------- */
+.plan{display:flex;flex-direction:column}
+.plan .price{font-family:var(--serif);font-size:46px;font-weight:400;color:var(--gold-2);line-height:1;margin:20px 0 6px}
+.plan .price small{font-size:15px;color:var(--ink-3);letter-spacing:.04em}
+.plan .per{font-size:12.5px;color:var(--ink-3);letter-spacing:.08em}
+.plan ul{list-style:none;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;flex:1}
+.plan li{font-size:14px;color:var(--ink-2);font-weight:300;display:flex;gap:10px;align-items:baseline;line-height:1.55}
+.plan li::before{content:"✦";color:var(--gold);font-size:10px;flex:none}
+.plan .deal{
+  position:absolute;top:22px;right:22px;z-index:1;
+  font-size:11px;letter-spacing:.1em;color:var(--gold-2);
+  border:1px solid rgba(201,169,106,.45);border-radius:999px;padding:5px 13px;
+  background:rgba(201,169,106,.10);
+}
+.plans-note{margin-top:26px;font-size:13px;color:var(--ink-3);line-height:1.8;font-weight:300;text-align:center}
+.plans-note b{color:var(--ink-2);font-weight:400}
+
+/* ---------- CTA ---------- */
+.cta{text-align:center;padding:150px 0}
+.cta-in{
+  border:1px solid var(--line);border-radius:32px;padding:78px 40px 74px;
+  background:
+    radial-gradient(700px 340px at 50% 0%,rgba(108,92,224,.18),transparent 70%),
+    linear-gradient(170deg,rgba(245,242,236,.05),rgba(245,242,236,.01));
+  position:relative;overflow:hidden;
+}
+.cta h2{font-family:var(--serif);font-size:clamp(32px,5vw,58px);font-weight:400;line-height:1.14;letter-spacing:-.01em}
+.cta h2 em{font-style:italic;color:var(--gold-2)}
+.cta .lead{margin:20px auto 0;max-width:44ch}
+.cta .badges{justify-content:center;margin-top:38px}
+.cta-note{margin-top:22px;font-size:12.5px;color:var(--ink-3);letter-spacing:.08em;font-weight:300}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:44px 0 52px}
+.foot-in{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.foot-in .f-links{display:flex;gap:26px;margin-left:auto;font-size:13.5px;color:var(--ink-2);font-weight:300}
+.foot-in .f-links a:hover{color:var(--gold)}
+.foot-in .copy{font-size:12.5px;color:var(--ink-3);letter-spacing:.05em}
+.foot-note{font-size:11.5px;color:var(--ink-3);margin-top:20px;line-height:1.8;max-width:70ch;font-weight:300}
+
+/* ---------- 滚动出现 ---------- */
+.rise{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+/* ---------- 响应式 ---------- */
+@media(max-width:980px){
+  .shots img{height:400px}
+  .chart-grid{grid-template-columns:1fr;gap:48px}
+  .grid-3,.voices-grid{grid-template-columns:1fr 1fr}
+  .metrics-in{grid-template-columns:1fr 1fr}
+  .zodiac-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:640px){
+  section{padding:88px 0}
+  .wrap,.nav-in{padding:0 22px}
+  .hero{padding:132px 0 72px}
+  .nav-links{display:none}
+  .grid-3,.voices-grid,.metrics-in{grid-template-columns:1fr}
+  .zodiac-grid{grid-template-columns:repeat(3,1fr)}
+  .cta-in{padding:56px 22px}
+  .cta .badges{flex-direction:column;align-items:center}
+  .badge{width:100%;max-width:280px;justify-content:center}
+  .chart-list .k{width:62px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rise{opacity:1;transform:none}
+}
+</style>
+</head>
+<body data-page-node-id="sOxyY7M1ddKC1DfP1AlKZZ">
+
+<canvas id="sky" data-page-node-id="v43CesL0bX2e59ABsJR5ix"></canvas>
+<div class="bg-grad" data-page-node-id="z4KJjYW2DZWvvRMmPIof0z"></div>
+<div class="bg-vignette" data-page-node-id="aBh3HERaDWDBXOiCSySzn9"></div>
+
+<!-- ============ NAV ============ -->
+<nav id="nav" data-page-node-id="u37AFtUwwMZON78LaARTTB">
+  <div class="nav-in" data-page-node-id="pECGELrjQE5Kncw3XzbC3c">
+    <a class="brand" href="#top" data-page-node-id="fskq2h9TDiTpsAdoEahAg8">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" data-page-node-id="tGXFgYKljTt3zIhJjtZeHO">
+        <path d="M12 2.5l2.4 6.3 6.6.5-5 4.3 1.5 6.4L12 16.6 6.5 20l1.5-6.4-5-4.3 6.6-.5z" data-page-node-id="wKhiEpFB6UeLJJs38xJx5z"/>
+      </svg>
+      <b data-page-node-id="ssFkNVJ0P7RE1L5rFXPCJ2">STELLA</b><span data-page-node-id="c8TiygrKBCX85HmGafFT4U">星辰</span>
+    </a>
+    <div class="nav-links" data-page-node-id="CAM0ESLefoKiSit9h1wWYA">
+      <a href="#features" data-page-node-id="5qQZXqaHl7MI3IQi6DrjhX">功能</a>
+      <a href="#chart" data-page-node-id="PFu470gC1fsYnFHHWrRz3D">本命星盘</a>
+      <a href="#membership" data-page-node-id="ENhlDFsSlMxiKKcWTmLq5y">会员</a>
+      <a href="#voices" data-page-node-id="bRm4Hq21lOrj9WiHGgF38Y">读者说</a>
+    </div>
+    <a class="btn sm" href="#download" data-page-node-id="1xHSY2erCh7NvGCoytWKxH">免费下载</a>
+  </div>
+</nav>
+
+<main id="top" data-page-node-id="ZvjA1uQYLehR0RLuEL76CK">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-page-node-id="29iLAjFZT3s5j00BIpxEBf">
+    <div class="wrap hero-grid" data-page-node-id="GyeWuP760o8IDEMKybJxMs">
+      <div data-page-node-id="as2sIhGgDpVC76Zlj0OqAR">
+        <div class="eyebrow rise" data-page-node-id="PhW4lbPt3Xyopdrg0Cf89R">Astrology, precisely</div>
+        <h1 class="rise" data-page-node-id="hG4Vh09UIpH8aUnimacI8r">属于你的那片星空<br data-page-node-id="Bp6wzVjtgHEhbAK9lm1nwI"><em data-page-node-id="Sc3QTx6XtXtz7zsLprsq9P">早已写下答案</em></h1>
+        <p class="lead rise" data-page-node-id="uRfTeLReyUeY1CUOhXGdxI">
+          Stella 用 NASA 星历数据生成你的本命星盘，把每天的行星过境，
+          翻译成一句听得懂的话。就着你的盘问 AI 占星师，每月一份深度月运报告。
+          不是十二分之一的通用运势，是你一个人的天象。
+        </p>
+        <div class="hero-cta rise" data-page-node-id="2vI3KW0B3mk2vovOTcGJNH">
+          <div class="badges" data-page-node-id="HnvOSJsruNj9O7XQBjgHLE">
+            <!-- TODO: 替换 href 为真实上架链接 -->
+            <a class="badge" href="#download" aria-label="从 App Store 下载" data-page-node-id="PBsI6wIyOeCcCc8fU3ZukL">
+              <svg viewBox="0 0 24 24" fill="currentColor" data-page-node-id="YhO2cfw4F1mp01Rnbiq6tm"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.3-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.2 1.1 0 1.5-.7 2.8-.7 1.3 0 1.6.7 2.7.7 1.1 0 1.9-1.1 2.6-2.1.8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.1-3.3zM14.1 5.9c.6-.7 1-1.7.9-2.7-.9.1-2 .6-2.6 1.3-.6.6-1 1.6-.9 2.6 1 .1 2-.5 2.6-1.2z" data-page-node-id="cJbMbemiCQ7dcXsm83zjRS"/></svg>
+              <span class="t" data-page-node-id="2nn5zoPEHCHDCgVBwcN7LL"><small data-page-node-id="LfmVa0buvgf6nsIziu5icf">Download on the</small><strong data-page-node-id="i0VCSVPjQJnqYwTy9ZUWM5">App Store</strong></span>
+            </a>
+          </div>
+          <div class="hero-note" data-page-node-id="T0GxBHVHvsqYRUYwS3PewN">iPhone · iOS 15.0 及以上 · 免费下载，无广告</div>
+        </div>
+      </div>
+
+      <!-- 截图画廊（横向滑动） -->
+      <div class="rise" data-page-node-id="RIZmyJ74nNXXQpjJwHFs2Q">
+        <div class="shots">
+          <img src="screenshots_custom_en/screenshot-1.jpg" alt="今日页 · 十二星座运势总览">
+          <img src="screenshots_custom_en/screenshot-11.jpg" alt="每日星座运势评分" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-6.jpg" alt="每日行运盘" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-7.jpg" alt="本命盘 · 整宫制 / Placidus / 容许度可选" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-3.jpg" alt="本命盘 AI 深度解读" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-2.jpg" alt="行运盘 AI 深度解读" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-10.jpg" alt="合盘评分" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-5.jpg" alt="合盘相位与落宫查看" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-4.jpg" alt="合盘 AI 深度解读" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-9.jpg" alt="周运报告" loading="lazy">
+          <img src="screenshots_custom_en/screenshot-8.jpg" alt="月运报告" loading="lazy">
+        </div>
+        <div class="shot-hint">← 左右滑动查看 →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METRICS ============ -->
+  <div class="metrics" data-page-node-id="0oONQEehzH05WTNlAZ7YuE">
+    <div class="wrap" data-page-node-id="4hcAT1aA6jwUexksrdBXcK">
+      <div class="metrics-in rise" data-page-node-id="SqRKFmP6JSUW9jk4EE5Fsv">
+        <div class="metric" data-page-node-id="VoZ4LvOHIjeOwlsMVdeWrK"><b data-page-node-id="d0Asy7fVugpJrc5rQ901XA">200<span style="font-size:20px" data-page-node-id="sYtb91HEYHL6OzpmK0j5yO">+</span></b><span data-page-node-id="7EwmCySZVpolrGvoL32jyb">本地解读条目</span></div>
+        <div class="metric" data-page-node-id="UQEutXywU9pz8rrbOrGvhH"><b data-page-node-id="QD9sDrrpBUVmZl05sjBMBR">10</b><span data-page-node-id="aVyFsBKmJbQEwChD1fA4vS">行星 × 12 宫位</span></div>
+        <div class="metric" data-page-node-id="iePRze3ZENnQ2Bv0DGA7SK"><b data-page-node-id="W6w3kHMkgYQFDvM5BfgYqT">0.01°</b><span data-page-node-id="elQWAUSFC5LMhiYOppFEiw">星历计算精度</span></div>
+        <div class="metric" data-page-node-id="flBjLn7UJDVrzcfOW0VKpV"><b data-page-node-id="CQLJf31lYCZ9KmyieepV7u">0</b><span data-page-node-id="iUB6Mv1d7oNb165u8IJ83x">广告与追踪 SDK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" data-page-node-id="7a6s3K0mXNPQcQoFUQRAWD">
+    <div class="wrap" data-page-node-id="ohAvAHiTJzBAIZIfkbecnM">
+      <div class="sec-head rise" data-page-node-id="gYIGrvcrj7rWSnf8Mfwf9p">
+        <div class="eyebrow" data-page-node-id="ICTecbyNdbGkxvJAvfoBza">Everything in one chart</div>
+        <h2 class="h2" data-page-node-id="hExWFMICz6RjCtxXmhiTsl">占星不该是<em data-page-node-id="u20mzwKTYQz85An5JSNZE2">猜谜</em><br data-page-node-id="fkmpcU9XWdiQmoZxuZq8Jn">而是一套可以验证的语言</h2>
+        <p class="lead" data-page-node-id="2J28EEgdWwz5gaXD9vNdUN">从本命盘到每日行运，Stella 把复杂的天象拆成六个能用的部分。</p>
+      </div>
+      <div class="grid-3" data-page-node-id="XDDB5UtvpBkZhcIO1pVGbV">
+        <div class="card rise" data-page-node-id="KNdHekRGp2aq0Il0KSWvEH">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" data-page-node-id="l8BiYHSG8lEzH8kux991vd"><circle cx="20" cy="20" r="15" data-page-node-id="MsGqWp82kmaoZzNDEyZCbc"/><circle cx="20" cy="20" r="9" data-page-node-id="g601MKgBRUDs91CZ1GNO9t"/><circle cx="20" cy="20" r="2.6" fill="currentColor" stroke="none" data-page-node-id="eXbgf7agLa0xgq5OHz8MEj"/><path d="M20 5v6M20 29v6M5 20h6M29 20h6" data-page-node-id="PDilm4A3LRuuGfj6aDE9Fq"/></svg>
+          <h3 data-page-node-id="UF8RoK2xenZlMSI3opgxN0">本命星盘</h3>
+          <p data-page-node-id="HuvMHBCHHBt587sMtKiTsn">输入出生日期、时间与地点，秒级生成高精度星盘。NASA JPL 星历，精度 0.01°；行运双盘叠加，捏合即可缩放细看每一条相位。</p>
+        </div>
+        <div class="card rise" data-page-node-id="UDo8ls6zr76tpCcDqQfKfe">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" data-page-node-id="87dGoptJferTRf48yAIpOA"><circle cx="20" cy="20" r="9" data-page-node-id="qdc7A5rcvDl3gTIQg2vmCL"/><path d="M20 3v4M20 33v4M3 20h4M33 20h4M8 8l3 3M29 29l3 3M32 8l-3 3M11 29l-3 3" data-page-node-id="8k1FkTQNp8ElVFShz7N2HP"/></svg>
+          <h3 data-page-node-id="DXcnEVH89VyAAfeZruskwW">每日与每周运势</h3>
+          <p data-page-node-id="2X9oa0owS7JhBXoZ3ryYN3">把当天的行星过境叠加到你的本命盘上，算出属于你的相位；每周一份七天趋势，提前安排重要的事。</p>
+        </div>
+        <div class="card rise" data-page-node-id="89eLYbXLp348VBsovUIhyD">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" data-page-node-id="TaOEdlJCRd5XIMjHGlXXKV"><path d="M8 10h24v16H16l-8 6z" data-page-node-id="TaOEdlJCRd5XIMjHGlXXKV"/><path d="M14 16h12M14 21h8" data-page-node-id="XhG2DlkV9qB3kQ8nbW3Wqa"/></svg>
+          <h3 data-page-node-id="a9PDM9otMz4BL2SNGGX9o0">AI 星语解读</h3>
+          <p data-page-node-id="32pFPX6YPbpDNFEuxUGbT6">就着你的盘提问，AI 占星师引用你真实的宫位与相位作答。本命、行运、合盘都能问，每一句都能回溯到盘上的某条线。</p>
+        </div>
+        <div class="card rise" data-page-node-id="dYyFbYypiuYMR8aZtC929a">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" data-page-node-id="ydZnI8r6hdkgKlLYeEPNJN"><rect x="7" y="9" width="26" height="24" rx="3" data-page-node-id="0a7Wg6tUeG1uGgisCFgprU"/><path d="M7 16h26M13 5v7M27 5v7M13 24h6M13 29h10" data-page-node-id="gEHmspXtlkV1PUDjM3vb3u"/></svg>
+          <h3 data-page-node-id="XmKemyS8coSH2VLiNUrla1">月运深度报告 <span style="font-size:11px;color:var(--gold);border:1px solid rgba(201,169,106,.4);border-radius:999px;padding:2px 9px;vertical-align:2px;letter-spacing:.08em">会员</span></h3>
+          <p data-page-node-id="49aVoT4RnEdvn0SaOnkByV">比周运更深的 30 天天象报告，AI 逐段解读你的月度主题，支持导出纯文本 / Markdown 随手收藏。</p>
+        </div>
+        <div class="card rise" data-page-node-id="ZYcVdu9Y7EZgSD0HM128gR">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" data-page-node-id="t6cnCkv0UCkMoOETb457z5"><circle cx="14" cy="20" r="10" data-page-node-id="A6wKlXhATNBZGuZ6fkd1Mx"/><circle cx="26" cy="20" r="10" data-page-node-id="ildmNYGbJajrQjB9NNEr6d"/><path d="M20 12v16" data-page-node-id="KDshpQq2kKz9nMwBrjxtX"/></svg>
+          <h3 data-page-node-id="73EhByhdUR1xsTXROrcfL0">合盘与关系 <span style="font-size:11px;color:var(--gold);border:1px solid rgba(201,169,106,.4);border-radius:999px;padding:2px 9px;vertical-align:2px;letter-spacing:.08em">会员</span></h3>
+          <p data-page-node-id="dJIkCUsnOjrQ0Z7AVRWQpc">两张真实出生数据算出的盘，相位一一可核对，看见关系的真实质地而不只是速配分数。会员不限次，也可按次解锁。</p>
+        </div>
+        <div class="card rise" data-page-node-id="DUlsjCyI5tL6oFcY1FOm68">
+          <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" data-page-node-id="z9ioFf15lLWcVSoHiarZLI"><rect x="9" y="17" width="22" height="15" rx="3" data-page-node-id="D9fTPBpnrjUAlyfYvM7JnP"/><path d="M14 17v-4a6 6 0 0112 0v4" data-page-node-id="gH2a3O8dMtlC9BEm9R5iLL"/></svg>
+          <h3 data-page-node-id="KDJGOlKwqvgMHfYdHal3so">隐私优先</h3>
+          <p data-page-node-id="WNDduZf0fgFOgt1SnhO71C">出生数据与星盘保存在你的设备上，支持 Apple 登录、游客即用。没有广告 SDK，不做用户画像。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" data-page-node-id="GOO8czS6eDex3jVmgdscUv"><div class="hairline" data-page-node-id="fbFpG6ELd64XZHDfaVdHO3"></div></div>
+
+  <!-- ============ CHART ============ -->
+  <section id="chart" data-page-node-id="FZaChpw17YaQvaKATTVGR3">
+    <div class="wrap chart-grid" data-page-node-id="xO9AUl5ArQsKy2QwN1HO6h">
+      <div class="rise" data-page-node-id="Sl7DHUplMqPLIouyWrThAd">
+        <div class="eyebrow" data-page-node-id="dQyRkGJ5t2J2asySuh3j3i">Birth chart</div>
+        <h2 class="h2" data-page-node-id="sm83G2A2UEPUSTx0dsPeyP">一张盘<br data-page-node-id="3AcJnqN7KVieERJMXFKpKX">说清你所有的<em data-page-node-id="Pu9V7tfAdXvg6Dlc3CGPj8">矛盾</em></h2>
+        <p class="lead" data-page-node-id="ZHE4a0mhR4VrxAH8IZmxpz">太阳是你想成为的人，月亮是你真正需要的东西，上升是别人第一眼看见的你。三者不一致，才是大多数人拧巴的来源。</p>
+        <ul class="chart-list" data-page-node-id="sRvXNhl3yZLbNEveLAfHOY">
+          <li data-page-node-id="0AY7T6etFebfrmEhYE4mRd"><span class="g" data-page-node-id="sApUvQ2nqOfuhU85edSBQd">☉</span><span class="k" data-page-node-id="No32mncWWQkAkhm5UE7dTN">太阳</span><span class="v" data-page-node-id="z5WZqj5HJ8i4lsrHlBB9Ur">核心意志与自我认同，你要去哪里</span></li>
+          <li data-page-node-id="s1Y2j6RDyfMpImDcKfCpMr"><span class="g" data-page-node-id="VCnZmzjucCLWC0SeGLR7X2">☽</span><span class="k" data-page-node-id="GxdGZspMFrrFYufvJtv53q">月亮</span><span class="v" data-page-node-id="edPLoy3avDVie8q2kPp4ws">情绪需求与安全感来源，你需要什么</span></li>
+          <li data-page-node-id="P2MnFXMeIp63oz1Fys4OtH"><span class="g" data-page-node-id="FNZ2Lk9gHjB0GcGQGx1a15">↑</span><span class="k" data-page-node-id="OeF2OSJblKexFm9pL39QrZ">上升</span><span class="v" data-page-node-id="v3228k02RssZSuwewA07yF">外在气质与应对世界的方式</span></li>
+          <li data-page-node-id="xcfAaV8dotNZqI0vYUdxsL"><span class="g" data-page-node-id="DLtlxlzT9Ws1ORybx1ZX0a">☿</span><span class="k" data-page-node-id="wZHCOQIBZNcyVl447V17GV">水星</span><span class="v" data-page-node-id="HAHNxPSP8DXjaZVUp6nr3D">思考、表达与学习的方式</span></li>
+          <li data-page-node-id="PSOEC2mVBY9abHGCGH1daA"><span class="g" data-page-node-id="9UCHaH6iKCSh5F4GzTybVd">♀</span><span class="k" data-page-node-id="tx2vZVsYyYVjiW9NI3v0bT">金星</span><span class="v" data-page-node-id="0OS82cpydNQnRjjLOPhuBB">你如何爱人，又被什么吸引</span></li>
+          <li data-page-node-id="yhlm5e9es3IUCqA6vwi1xU"><span class="g" data-page-node-id="DoOd7deMlIU1Ut55cKFwFz">♂</span><span class="k" data-page-node-id="VTPYqxY0SVlKX8gJ5hvCow">火星</span><span class="v" data-page-node-id="FVxppyIygq9Isv0DqFoio4">行动力、欲望与你的脾气</span></li>
+        </ul>
+      </div>
+      <div class="chart-visual rise" data-page-node-id="lp5sD1WDunglIRhiXfxnN5">
+        <!-- 星盘 SVG -->
+        <svg class="wheel" viewBox="0 0 420 420" id="wheel" data-page-node-id="8Tp3d76bCnbuhipRM6lZL0"></svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" data-page-node-id="EYPFCtrRA3DOiazM9CieTh"><div class="hairline" data-page-node-id="AlARAmhE1eVv55i6sN9QgS"></div></div>
+
+  <!-- ============ ZODIAC ============ -->
+  <section id="zodiac" data-page-node-id="Enrb74bIouIDXFQvTbbDkB">
+    <div class="wrap" data-page-node-id="ggip0hz4lqH9Z7kSxjOYWF">
+      <div class="sec-head rise" data-page-node-id="LTQrNJyP3HE42wU7jPG1sA">
+        <div class="eyebrow" data-page-node-id="Mlfn2bMMnqlB98p12kPnEX">Twelve signs</div>
+        <h2 class="h2" data-page-node-id="opKbF052qfbA6R5NqTNEDe">先看太阳，<em data-page-node-id="korYwZNAsuoXSEymGtxtNG">再看月亮</em></h2>
+        <p class="lead" data-page-node-id="0hD9sJd7iaZWZVT4UH13pn">太阳星座是你出发的地方，不是全部。点开任意一个，从今天的行运开始读起。</p>
+      </div>
+      <div class="zodiac-grid" id="zodiacGrid" data-page-node-id="aOIWkFiUzylFpcYk71A7Qp"></div>
+    </div>
+  </section>
+
+  <!-- ============ VOICES ============ -->
+  <section id="voices" data-page-node-id="n8p45MrAmlv8CYkKNTsBTh">
+    <div class="wrap" data-page-node-id="Du39itTwsoNrzFhipJwf8b">
+      <div class="sec-head rise" data-page-node-id="DXeIDpx2KUsWE6hmJjIys2">
+        <div class="eyebrow" data-page-node-id="7omwCzJQ0b9qAJQCGcN647">What readers say</div>
+        <h2 class="h2" data-page-node-id="FWvV9ylLZtywTN0tFFo3Ot">他们把 Stella <em data-page-node-id="6n7yEIiXCrADLhvrKEcnJc">留在了主屏</em></h2>
+      </div>
+      <div class="voices-grid" data-page-node-id="G0LPMG0Hc2LSkmQxryfuVp">
+        <div class="voice rise" data-page-node-id="ViB66Oz6WRX4bcAzZf1AQr">
+          <p data-page-node-id="EuS5FjIKqmocKA4IKRSgUf">「第一次有人告诉我，我的太阳和月亮是打架的。看完那段解释，很多纠结突然说得通了。」</p>
+          <div class="who" data-page-node-id="S9F99tQkcFFFvZMhvZZS1M"><div class="av" data-page-node-id="IX0P3nyntpFzE8EW4OFJJh"></div><div data-page-node-id="PFYGk75RXctc7BviNzlhyZ"><b data-page-node-id="tCQD6uKFvpxc67gnT3wcGO">Ning.</b><span data-page-node-id="TZdk3TOTkVCOzwWQq428FG">内测用户 · 上海</span></div></div>
+        </div>
+        <div class="voice rise" data-page-node-id="FI6v9E35cF2alRDuRNsUlf">
+          <p data-page-node-id="hjj1ymgwwLHeCOzTQrFIWB">「水逆提醒很实用。以前是事后才反应过来，现在是提前就知道那几天别签合同。」</p>
+          <div class="who" data-page-node-id="XIFlIci8l1GLmBzvmU2uzI"><div class="av" data-page-node-id="0f5bYFCfDru3cML8POWRaU"></div><div data-page-node-id="l3I2x4U8ccMAf7LPBO4yJN"><b data-page-node-id="VTJPszIvQsmSmQjIskEWt5">阿树</b><span data-page-node-id="zPvAiFODAreMUDUNQNhPA1">内测用户 · 成都</span></div></div>
+        </div>
+        <div class="voice rise" data-page-node-id="7FslWoGApU7dPPbAIKAbxc">
+          <p data-page-node-id="HP8QOrmb4ZcUxbAg47sEHw">「界面干净得不像占星 App，没有满屏的紫色水晶。数据只存本地这点加很多分。」</p>
+          <div class="who" data-page-node-id="dYWyqnnkzv1U5gECBosozE"><div class="av" data-page-node-id="QB8xO8VDx7fAhUZeZMDoVO"></div><div data-page-node-id="jgEcK1opxRKdbbGhSfTYxp"><b data-page-node-id="VF6CIiAGgfuATYuG92adYB">Yuki</b><span data-page-node-id="4DbudEjsDsBDs1bH5mlfx4">内测用户 · 北京</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MEMBERSHIP ============ -->
+  <section id="membership">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <div class="eyebrow">Membership</div>
+        <h2 class="h2">免费的够用，<em>会员更深</em></h2>
+        <p class="lead">本命星盘、每日与每周运势永久免费。订阅会员解锁月运深度报告、合盘不限次、月亮换座推送、多档案与报告导出，每月还送 AI 积分。</p>
+      </div>
+      <div class="grid-3">
+        <div class="card plan rise">
+          <h3>连续包月</h3>
+          <div class="price">¥12<small> / 月</small></div>
+          <div class="per">自动续订 · 随时取消</div>
+          <ul>
+            <li>每月送 30 枚 AI 积分（≈ 每天一次解读）</li>
+            <li>月运深度报告 · 报告导出</li>
+            <li>月亮换座实时推送 · 多档案</li>
+          </ul>
+        </div>
+        <div class="card plan rise">
+          <h3>连续包季</h3>
+          <div class="price">¥30<small> / 季</small></div>
+          <div class="per">自动续订 · 随时取消</div>
+          <ul>
+            <li>每季送 96 枚 AI 积分</li>
+            <li>合盘不限次 · 按次省 22%</li>
+            <li>全部会员权益同包月</li>
+          </ul>
+        </div>
+        <div class="card plan rise">
+          <span class="deal">最划算 · 省 45%</span>
+          <h3>连续包年</h3>
+          <div class="price">¥88<small> / 年</small></div>
+          <div class="per">自动续订 · 随时取消</div>
+          <ul>
+            <li>每年送 396 枚 AI 积分</li>
+            <li>合盘不限次 · 全部会员权益</li>
+            <li>折合每月约 ¥7.3</li>
+          </ul>
+        </div>
+      </div>
+      <p class="plans-note rise">不想订阅？<b>积分包 ¥6 / 20 枚，永久有效</b>，按次使用 AI 解读。<br>订阅赠送积分当期有效，购买的积分永久有效。连续订阅可随时在系统设置中取消。</p>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="hairline"></div></div>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta" id="download" data-page-node-id="F5tYnRI4DSABAlULqDhvRs">
+    <div class="wrap" data-page-node-id="3XerQcTuyLhLIpW6ynwgXs">
+      <div class="cta-in rise" data-page-node-id="8pFXpbKDNFPug9sOfKqFjn">
+        <div class="eyebrow" style="margin-bottom:18px" data-page-node-id="R1o7lk8jYgkHFQVn26OEhG">Get Stella</div>
+        <h2 data-page-node-id="GAz1kM0VQdE7poZ5ugRrf2">今晚抬头看一眼，<br data-page-node-id="pwhLC6f50zXln9RKVYMWt7"><em data-page-node-id="gPaHqDqvEt6d6Xr1sA0nRt">星星正在说什么</em></h2>
+        <p class="lead" data-page-node-id="JCtq5MbFsl6f235sRyThYo">免费下载，无广告，不要账号。输入出生时间，两分钟得到你的第一张星盘。</p>
+        <div class="badges" data-page-node-id="3gugHwH6H1Jcd0366SMPXm">
+          <!-- TODO: 替换 href 为真实上架链接 -->
+          <a class="badge" href="#" aria-label="从 App Store 下载" data-page-node-id="4ur84mXkkZb3XFABfdFz8b">
+            <svg viewBox="0 0 24 24" fill="currentColor" data-page-node-id="gQhc90UkJBuHnhiEqjHM5y"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.3-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.2 1.1 0 1.5-.7 2.8-.7 1.3 0 1.6.7 2.7.7 1.1 0 1.9-1.1 2.6-2.1.8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.1-3.3zM14.1 5.9c.6-.7 1-1.7.9-2.7-.9.1-2 .6-2.6 1.3-.6.6-1 1.6-.9 2.6 1 .1 2-.5 2.6-1.2z" data-page-node-id="BHGb5galIbFJ8wCN3iUtTB"/></svg>
+            <span class="t" data-page-node-id="R6yXqVWtY59GV1gA72SrZZ"><small data-page-node-id="6hM1ltV5fWzXVV2pDf0PC8">Download on the</small><strong data-page-node-id="OZYs8gTci4qiCnfSYBexay">App Store</strong></span>
+          </a>
+        </div>
+        <div class="cta-note" data-page-node-id="7lSpsrTSY4NFAvyCWgKKDv">iPhone · iOS 15.0+ · 免费下载 · 内购：订阅会员与积分包</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer data-page-node-id="bBuRbLIAMOJX6RzBguanwI">
+  <div class="wrap" data-page-node-id="dWFJtioxkwmXwSXNlKQDCq">
+    <div class="foot-in" data-page-node-id="ZYz32p0jCA1qaqF8b00NqB">
+      <a class="brand" href="#top" data-page-node-id="p9HqiPDscO1oPgkDdAF6kF">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" data-page-node-id="daOrAOeKpnHZkhuii7Aayj">
+          <path d="M12 2.5l2.4 6.3 6.6.5-5 4.3 1.5 6.4L12 16.6 6.5 20l1.5-6.4-5-4.3 6.6-.5z" data-page-node-id="RxNE38ln7wANOMHZU0sW2g"/>
+        </svg>
+        <b data-page-node-id="WN36dmxHcmxKqCCTDxlXUq">STELLA</b><span data-page-node-id="vaTOMSm7sT7TJeDmRUSsG7">星辰</span>
+      </a>
+      <div class="f-links" data-page-node-id="GkHdKuf7htb0PVxKrO4WBZ">
+        <a href="#features" data-page-node-id="pdHAHSVorQ42cq4hiMfOUz">功能</a>
+        <a href="#membership" data-page-node-id="BkQw4Rk5vXpNzLdRnSxYqF">会员</a>
+        <a href="#download" data-page-node-id="eyE8eHA2FnXhvobc7uujYI">下载</a>
+        <a href="#" data-page-node-id="TCb71XXAjJlRKdEo9aFnNd">隐私政策</a>
+        <a href="#" data-page-node-id="puX2HyE3SRBwkvopdsfUBm">支持</a>
+      </div>
+      <div class="copy" data-page-node-id="moxpmoAuPtl7JIGT0Cyvq0">© 2026 Stella 星辰</div>
+    </div>
+    <p class="foot-note" data-page-node-id="uN8YeFFKVSYuQea3poqos4">Stella 提供的内容仅供娱乐与自我探索参考，不构成任何医疗、心理、法律或财务建议。生活中的重要决定，请交给你自己。</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- 星空背景 ---------- */
+(function(){
+  var cv = document.getElementById('sky');
+  var ctx = cv.getContext('2d');
+  var W=0,H=0,DPR=1,stars=[],meteors=[],raf=null;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio||1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W*DPR; cv.height = H*DPR;
+    cv.style.width = W+'px'; cv.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    build();
+  }
+  function build(){
+    var n = Math.round(W*H/7000);
+    n = Math.max(60, Math.min(n, 260));
+    stars = [];
+    for(var i=0;i<n;i++){
+      stars.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: Math.random()*1.25+.25,
+        a: Math.random()*.55+.18,
+        ph: Math.random()*Math.PI*2,
+        sp: Math.random()*.012+.004,
+        drift: Math.random()*.06+.015
+      });
+    }
+  }
+  function spawnMeteor(){
+    var fromTop = Math.random()>.4;
+    meteors.push({
+      x: Math.random()*W*.9,
+      y: fromTop ? -40 : Math.random()*H*.45,
+      len: Math.random()*90+70,
+      sp: Math.random()*5+5,
+      life: 1,
+      ang: Math.PI/4 + (Math.random()*.14-.07)
+    });
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){
+      var s = stars[i];
+      s.ph += s.sp;
+      s.y -= s.drift*0.28;
+      if(s.y < -2){ s.y = H+2; s.x = Math.random()*W; }
+      var tw = .62 + Math.sin(s.ph)*.38;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(245,242,236,'+(s.a*tw).toFixed(3)+')';
+      ctx.fill();
+    }
+    for(var m=meteors.length-1;m>=0;m--){
+      var o = meteors[m];
+      var dx = Math.cos(o.ang)*o.sp, dy = Math.sin(o.ang)*o.sp;
+      o.x += dx; o.y += dy; o.life -= .009;
+      if(o.life<=0 || o.x>W+120 || o.y>H+120){ meteors.splice(m,1); continue; }
+      var g = ctx.createLinearGradient(o.x,o.y,o.x-Math.cos(o.ang)*o.len,o.y-Math.sin(o.ang)*o.len);
+      g.addColorStop(0,'rgba(231,210,164,'+(o.life*.9).toFixed(3)+')');
+      g.addColorStop(1,'rgba(231,210,164,0)');
+      ctx.strokeStyle=g; ctx.lineWidth=1.4; ctx.lineCap='round';
+      ctx.beginPath();
+      ctx.moveTo(o.x,o.y);
+      ctx.lineTo(o.x-Math.cos(o.ang)*o.len, o.y-Math.sin(o.ang)*o.len);
+      ctx.stroke();
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  if(!reduced){
+    frame();
+    setInterval(function(){ if(meteors.length<2 && Math.random()>.45) spawnMeteor(); }, 2600);
+  } else {
+    // 静态星空
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(245,242,236,'+s.a+')'; ctx.fill();
+    }
+  }
+  document.addEventListener('visibilitychange', function(){
+    if(reduced) return;
+    if(document.hidden){ if(raf){cancelAnimationFrame(raf); raf=null;} }
+    else if(!raf){ frame(); }
+  });
+})();
+
+/* ---------- 本命星盘 SVG（复刻 App NatalWheel 深空风格） ---------- */
+(function(){
+  var svg = document.getElementById('wheel');
+  if(!svg) return;
+  var NS='http://www.w3.org/2000/svg';
+  var cx=210, cy=210;
+  function el(t,attrs,parent){
+    var e=document.createElementNS(NS,t);
+    for(var k in attrs) e.setAttribute(k,attrs[k]);
+    (parent||svg).appendChild(e); return e;
+  }
+  function P(deg,r){var a=deg*Math.PI/180;return [cx+Math.cos(a)*r, cy+Math.sin(a)*r];}
+  function f1(n){return (+n).toFixed(1);}
+
+  /* defs：深空径向底 / 中心徽章渐变 / 星云模糊 / 辉光 */
+  var defs=el('defs',{});
+  var gBg=el('radialGradient',{id:'deepBg'},defs);
+  el('stop',{offset:'0%','stop-color':'#0B1830'},gBg);
+  el('stop',{offset:'62%','stop-color':'#061020'},gBg);
+  el('stop',{offset:'100%','stop-color':'#04080F'},gBg);
+  var gMd=el('radialGradient',{id:'medalGrad'},defs);
+  el('stop',{offset:'0%','stop-color':'#1A3080','stop-opacity':.55},gMd);
+  el('stop',{offset:'55%','stop-color':'#111F45'},gMd);
+  el('stop',{offset:'100%','stop-color':'#243468'},gMd);
+  var fNeb=el('filter',{id:'nebBlur',x:'-80%',y:'-80%',width:'260%',height:'260%'},defs);
+  el('feGaussianBlur',{stdDeviation:'20'},fNeb);
+  var fGlow=el('filter',{id:'glow',x:'-120%',y:'-120%',width:'340%',height:'340%'},defs);
+  el('feGaussianBlur',{stdDeviation:'2.2',result:'b'},fGlow);
+  var mg=el('feMerge',{},fGlow);
+  el('feMergeNode',{in:'b'},mg);
+  el('feMergeNode',{in:'SourceGraphic'},mg);
+
+  /* 深空底盘 + 三团星云（漂移 18/24/20s） */
+  el('circle',{cx:cx,cy:cy,r:200,fill:'url(#deepBg)'});
+  el('circle',{cx:cx-70,cy:cy-84,r:80,fill:'#4433CC',opacity:.18,filter:'url(#nebBlur)','class':'neb n1'});
+  el('circle',{cx:cx+86,cy:cy+52,r:70,fill:'#CC3366',opacity:.14,filter:'url(#nebBlur)','class':'neb n2'});
+  el('circle',{cx:cx-52,cy:cy+96,r:60,fill:'#0066CC',opacity:.12,filter:'url(#nebBlur)','class':'neb n3'});
+
+  /* 星野：46 颗星，三组闪烁 2.1/3.4/1.7s */
+  var seed=7; function rnd(){seed=(seed*16807)%2147483647; return seed/2147483647;}
+  for(var i=0;i<46;i++){
+    var sa=rnd()*360, sr=Math.sqrt(rnd())*192, sp=P(sa,sr);
+    el('circle',{cx:f1(sp[0]),cy:f1(sp[1]),r:(0.6+rnd()*0.9).toFixed(2),
+      fill:'#E9EEF6','class':'tw'+(1+i%3)});
+  }
+
+  /* 外刻度环（160s 顺时针慢转）：30°主/15°中/5°次 三级刻度 */
+  var tr=el('g',{'class':'tickring'});
+  el('circle',{cx:cx,cy:cy,r:200,fill:'none',stroke:'rgba(201,168,76,.5)','stroke-width':1},tr);
+  el('circle',{cx:cx,cy:cy,r:181,fill:'none',stroke:'rgba(201,168,76,.3)','stroke-width':.8},tr);
+  for(var d=0;d<360;d+=5){
+    var maj=d%30===0, mid=d%15===0;
+    var t1=P(d-90, maj?185:(mid?188:191)), t2=P(d-90,197);
+    el('line',{x1:f1(t1[0]),y1:f1(t1[1]),x2:f1(t2[0]),y2:f1(t2[1]),
+      stroke:maj?'#D4AC50':(mid?'#6A7A9A':'#3A4A62'),
+      'stroke-width':maj?1.4:1,opacity:maj?.9:(mid?.65:.45)},tr);
+  }
+
+  /* 星座环：Aries 中点在 165°（ASC 于 9 点钟、黄道逆时针） */
+  var ZOD=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+  var NEON=['#FF6B6B','#66D98E','#FFE066','#7EC8E3','#FFA040','#98D4A3','#E0A0E0','#5CC8C8','#FF9966','#88C8A0','#66CCFF','#CC99FF'];
+  for(i=0;i<12;i++){
+    var midA=165-30*i, edgeA=180-30*i;
+    var b1=P(edgeA,146), b2=P(edgeA,180);
+    el('line',{x1:f1(b1[0]),y1:f1(b1[1]),x2:f1(b2[0]),y2:f1(b2[1]),
+      stroke:'rgba(85,96,112,.4)','stroke-width':.8});
+    var s1=P(midA-13,175), s2=P(midA+13,175);
+    el('path',{d:'M'+f1(s1[0])+' '+f1(s1[1])+' A175 175 0 0 1 '+f1(s2[0])+' '+f1(s2[1]),
+      fill:'none',stroke:NEON[i],'stroke-width':2,opacity:.35});
+    for(var k=-1;k<=1;k++){
+      var dp=P(midA+k*9,151);
+      el('circle',{cx:f1(dp[0]),cy:f1(dp[1]),r:1.3,fill:NEON[i],opacity:.45});
+    }
+    var gp=P(midA,163);
+    var gt=el('text',{x:f1(gp[0]),y:f1(gp[1]),'text-anchor':'middle','dominant-baseline':'central',
+      fill:NEON[i],'font-size':'15','font-family':'serif',filter:'url(#glow)'});
+    gt.textContent=ZOD[i];
+  }
+
+  /* 宫线：12 条参考线 + 四轴整直径亮金 */
+  for(i=0;i<12;i++){
+    var e1=P(180-30*i,66), e2=P(180-30*i,146);
+    el('line',{x1:f1(e1[0]),y1:f1(e1[1]),x2:f1(e2[0]),y2:f1(e2[1]),
+      stroke:'rgba(85,96,112,.5)','stroke-width':.8});
+  }
+  [[180,0],[270,90]].forEach(function(ax){
+    var a1=P(ax[0],200), a2=P(ax[1],200);
+    el('line',{x1:f1(a1[0]),y1:f1(a1[1]),x2:f1(a2[0]),y2:f1(a2[1]),
+      stroke:'rgba(212,172,80,.9)','stroke-width':1.1});
+  });
+  /* 宫位号 */
+  for(i=0;i<12;i++){
+    var hn=P(165-30*i,86);
+    var ht=el('text',{x:f1(hn[0]),y:f1(hn[1]),'text-anchor':'middle','dominant-baseline':'central',
+      fill:'#6B7FA3','font-size':'8'});
+    ht.textContent=String(i+1);
+  }
+  /* 相位参考圆 */
+  el('circle',{cx:cx,cy:cy,r:66,fill:'none',stroke:'rgba(30,46,72,.9)','stroke-width':.8});
+
+  /* 行星（NatalStagger 错落 + 真实黄经留刻度） */
+  var PL=[['☉','#FFD700',15],['☽','#C0C8D8',105],['☿','#B8A090',345],['♀','#FFB6C1',45],
+          ['♂','#FF6B6B',255],['♃','#DEB887',285],['♄','#8B9DC3',195],['♅','#7FDBFF',135],
+          ['♆','#9B89B4',225],['♇','#CD853F',75]];
+  var OFF=[0,-24,24,-46,46,-68,68];
+  var ASPC=['#F59E0B','#60A5FA','#F87171','#10B981','#8B5CF6'];
+  /* 相位线 + 流光（第 i 条 2.8+0.55i 秒一趟） */
+  var ASP=[[0,1,1],[0,3,0],[1,7,2],[4,5,3],[6,8,4],[2,9,3],[3,4,1],[5,9,2],[7,8,1]];
+  ASP.forEach(function(a,ai){
+    var p1=P(PL[a[0]][2],133), p2=P(PL[a[1]][2],133);
+    var col=ASPC[a[2]];
+    el('line',{x1:f1(p1[0]),y1:f1(p1[1]),x2:f1(p2[0]),y2:f1(p2[1]),
+      stroke:col,'stroke-width':1,opacity:.42});
+    var beam=el('line',{x1:f1(p1[0]),y1:f1(p1[1]),x2:f1(p2[0]),y2:f1(p2[1]),
+      stroke:col,'stroke-width':2,'stroke-dasharray':'10 270',pathLength:280,'class':'beam',opacity:.85});
+    beam.style.animationDuration=(2.8+ai*0.55)+'s';
+    beam.style.animationDelay=(ai*0.35)+'s';
+  });
+  PL.forEach(function(p,idx){
+    var off=OFF[idx%OFF.length], trueA=p[2], disp=trueA+off;
+    if(off!==0){
+      var c1=P(trueA,124), c2=P(trueA,133);
+      el('line',{x1:f1(c1[0]),y1:f1(c1[1]),x2:f1(c2[0]),y2:f1(c2[1]),
+        stroke:'rgba(85,96,112,.7)','stroke-width':.8});
+    }
+    var bp=P(disp,133);
+    el('circle',{cx:f1(bp[0]),cy:f1(bp[1]),r:9.5,fill:'rgba(4,8,15,.9)',
+      stroke:p[1],'stroke-width':1.1,filter:'url(#glow)'});
+    var pt=el('text',{x:f1(bp[0]),y:f1(bp[1]),'text-anchor':'middle','dominant-baseline':'central',
+      fill:p[1],'font-size':'10','font-family':'serif',filter:'url(#glow)'});
+    pt.textContent=p[0];
+  });
+
+  /* 中心徽章 + ASC 标识（9 点钟） */
+  el('circle',{cx:cx,cy:cy,r:42,fill:'none',stroke:'rgba(201,168,76,.35)','stroke-width':.8});
+  el('circle',{cx:cx,cy:cy,r:30,fill:'url(#medalGrad)',stroke:'#D4AC50','stroke-width':1.1});
+  var ct=el('text',{x:cx,y:cy,'text-anchor':'middle','dominant-baseline':'central',
+    fill:'#D4AC50','font-size':'18','font-family':'serif',filter:'url(#glow)'});
+  ct.textContent='✦';
+  var ap=P(180,170);
+  el('circle',{cx:f1(ap[0]),cy:f1(ap[1]),r:11,fill:'#04080F',opacity:.92,
+    stroke:'rgba(212,172,80,.5)','stroke-width':.8});
+  var at=el('text',{x:f1(ap[0]),y:f1(ap[1]),'text-anchor':'middle','dominant-baseline':'central',
+    fill:'#D4AC50','font-size':'8','letter-spacing':'1px',filter:'url(#glow)'});
+  at.textContent='ASC';
+})();
+
+/* ---------- 十二星座网格 ---------- */
+(function(){
+  var grid=document.getElementById('zodiacGrid');
+  if(!grid) return;
+  var data=[
+    ['♈','白羊','3.21 – 4.19'],['♉','金牛','4.20 – 5.20'],['♊','双子','5.21 – 6.21'],
+    ['♋','巨蟹','6.22 – 7.22'],['♌','狮子','7.23 – 8.22'],['♍','处女','8.23 – 9.22'],
+    ['♎','天秤','9.23 – 10.23'],['♏','天蝎','10.24 – 11.22'],['♐','射手','11.23 – 12.21'],
+    ['♑','摩羯','12.22 – 1.19'],['♒','水瓶','1.20 – 2.18'],['♓','双鱼','2.19 – 3.20']
+  ];
+  data.forEach(function(d,i){
+    var a=document.createElement('a');
+    a.className='z rise'; a.href='#download';
+    a.style.transitionDelay=(i*40)+'ms';
+    a.innerHTML='<span class="s">'+d[0]+'</span><span class="n">'+d[1]+'</span><span class="d">'+d[2]+'</span>';
+    grid.appendChild(a);
+  });
+})();
+
+/* ---------- 滚动出现 ---------- */
+(function(){
+  var items=document.querySelectorAll('.rise');
+  if(!('IntersectionObserver' in window)){
+    items.forEach(function(n){n.classList.add('in')}); return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  items.forEach(function(n){io.observe(n)});
+})();
+
+/* ---------- nav 吸顶状态 ---------- */
+(function(){
+  var nav=document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY>24); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+})();
+</script>
+</body>
+</html>
