@@ -3,18 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Stella星辰隐私政策：出生资料仅保存在你的设备上，仅在 Apple 登录、AI 解读与订阅时发送必要信息，不接入任何广告或统计 SDK。">
 <title>Stella星辰 · 隐私政策</title>
 <style>
-  :root { color-scheme: light; }
+  :root { color-scheme: light; --accent:#8b5cf6; --accent-soft:#f5f3ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     background: #f9fafb; color: #1f2937; line-height: 1.75; font-size: 15px;
   }
-  .wrap { max-width: 680px; margin: 0 auto; padding: 40px 20px 64px; }
-  header { text-align: center; margin-bottom: 32px; }
-  header .icon { font-size: 40px; }
-  header h1 { font-size: 22px; font-weight: 700; margin-top: 8px; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 64px; }
+  nav.top { display:flex; gap:16px; justify-content:center; font-size:13px; margin-bottom:24px; }
+  nav.top a { color: var(--accent); text-decoration:none; }
+  nav.top a:hover { text-decoration: underline; }
+  header { text-align: center; margin-bottom: 28px; }
+  header .icon {
+    font-size: 34px; width:64px; height:64px; line-height:64px; margin:0 auto;
+    border-radius:50%; background: linear-gradient(135deg,#ede9fe,#ddd6fe); color: var(--accent);
+  }
+  header h1 { font-size: 22px; font-weight: 700; margin-top: 12px; }
   header .meta { font-size: 12px; color: #9ca3af; margin-top: 6px; }
   section {
     background: #fff; border: 1px solid #f3f4f6; border-radius: 16px;
@@ -25,20 +32,23 @@
   section ul { padding-left: 20px; margin-top: 6px; }
   section li { margin-bottom: 6px; }
   .highlight {
-    background: #f5f3ff; border: 1px solid #e5e1fb; border-radius: 12px;
+    background: var(--accent-soft); border: 1px solid #e5e1fb; border-radius: 12px;
     padding: 14px 16px; margin-bottom: 16px; font-size: 14px; color: #5b21b6;
   }
   footer { text-align: center; font-size: 12px; color: #9ca3af; margin-top: 24px; }
-  footer a { color: #8b5cf6; text-decoration: none; }
-  a { color: #8b5cf6; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  a { color: var(--accent); }
+  a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <nav class="top"><a href="support.html">支持页</a></nav>
   <header>
     <div class="icon">✦</div>
     <h1>Stella星辰 · 隐私政策</h1>
-    <div class="meta">生效日期：2026 年 9 月 12 日</div>
+    <div class="meta">生效日期：2026 年 9 月 17 日</div>
   </header>
 
   <div class="highlight">
@@ -52,7 +62,7 @@
     <ul>
       <li>本应用不接入任何广告、统计、埋点或崩溃收集 SDK，不收集你的使用行为数据。</li>
       <li>不请求定位、相机、麦克风、相册、通讯录等权限。</li>
-      <li>无需登录即可使用本命盘、每日运势、周运等本地历算功能。</li>
+      <li>无需登录即可使用本命盘、每日天象、周历等本地历算功能。</li>
     </ul>
   </section>
 
@@ -61,7 +71,7 @@
     <p>以下信息仅保存在本机存储中，用于在你自己的设备上完成天文历算，
     卸载应用即被删除，我们无法读取、也无法恢复：</p>
     <ul>
-      <li>出生日期、出生时刻与出生地点（用于计算星座、上升星座与各类运势）</li>
+      <li>出生日期、出生时刻与出生地点（用于计算星座、上升星座与各类星盘数据）</li>
       <li>档案名称、默认星座、提醒开关等偏好设置</li>
     </ul>
   </section>
@@ -95,7 +105,7 @@
   <section>
     <h2>5. 权限使用</h2>
     <ul>
-      <li><strong>通知（可选）</strong>：仅在你主动开启「月亮换座提醒 / 每日运势提醒」后，
+      <li><strong>通知（可选）</strong>：仅在你主动开启「月亮换座提醒 / 每日天象提醒」后，
       由系统在本地调度发送，不经过任何服务器。你可随时在系统设置中关闭。</li>
     </ul>
   </section>
@@ -136,7 +146,7 @@
 
   <section>
     <h2>10. 免责声明</h2>
-    <p>本应用提供的星座运势、幸运指数等内容基于天文历算与占星传统生成，
+    <p>本应用提供的星座解读、幸运指数等内容由天文历算结合星盘体系生成，
     仅供娱乐与自我参考，不构成任何医疗、投资、法律或其他专业建议。</p>
   </section>
 
